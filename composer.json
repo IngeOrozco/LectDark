@@ -20,7 +20,7 @@
         "php": ">=7.4"
     },
     "scripts": {
-        "lectdark": "Lectdark\\Command::makeBase"
+        "lectdark": "php vendor/lect-studios/lectdark/lectdark.php"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
