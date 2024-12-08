@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Lectdark\Command;
+
+// Verificar argumentos
+if ($argc !== 3 || $argv[1] !== 'make:base') {
+    echo "Uso: php lectdark.php make:base [nombre]\n";
+    exit(1);
+}
+
+$baseName = ucfirst($argv[2]);
+Command::makeBase($baseName);

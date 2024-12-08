@@ -1,0 +1,21 @@
+{
+    "name": "lect-studios/lectdark",
+    "description": "Librería para generar estructuras de proyecto automáticamente.",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Lectdark\\": "src/"
+        }
+    },
+    "bin": [
+        "lectdark.php"
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "scripts": {
+        "lectdark": "Lectdark\\Command::makeBase"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
