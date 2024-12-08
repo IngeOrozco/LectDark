@@ -32,10 +32,58 @@ class Cmd_change
                 // Guardar los cambios en el archivo
                 file_put_contents($newPath, $fileContents);
 
-                echo "El archivo y la clase '$prefix$from' fueron renombrados a '$prefix$to'.\n";
+                echo color("El archivo y la clase '" . bold($prefix . $from, false) . "' fueron renombrados a '" . bold($prefix . $to, false) . "'.\n", "green");
+
+                // Buscar otros archivos que puedan estar utilizando esta clase
+                self::updateClassReferences($from, $to, $prefix);
             } else {
-                echo "El archivo '$prefix$from.php' no existe en '$dir'.\n";
+                echo color("El archivo '" . bold($prefix . $from . ".php") . "' no existe en '" . bold($dir) . "'.\n", "red");
             }
         }
     }
+
+    private static function updateClassReferences(string $from, string $to, string $prefix)
+    {
+        // Buscar todos los archivos PHP en el directorio
+        $files = glob(__DIR__ . "/../../app/**/*.{php}", GLOB_BRACE);
+    
+        foreach ($files as $file) {
+            // Leer el contenido del archivo
+            $fileContents = file_get_contents($file);
+    
+            // Verificar si contiene al menos una referencia específica al prefijo y clase antigua
+            if (strpos($fileContents, $prefix . $from) !== false) {
+                // Reemplazar todas las referencias a la clase antigua con la nueva
+                $updatedContents = preg_replace('/\b' . preg_quote($prefix . $from, '/') . '\b/', $prefix . $to, $fileContents);
+    
+                // Verificar si hubo cambios
+                if ($updatedContents !== $fileContents) {
+                    // Guardar los cambios
+                    file_put_contents($file, $updatedContents);
+                    echo color("Se actualizó una referencia a '" . bold($prefix . $from, false) . "' en '" . bold($file, false) . "'.\n", "green");
+                }
+            }
+        }
+    }
+    
+
+
+    // private static function updateClassReferences(string $from, string $to, string $prefix)
+    // {
+    //     // Buscar todos los archivos PHP en el directorio
+    //     $files = glob(__DIR__ . "/../../app/**/*.{php}", GLOB_BRACE);
+
+    //     foreach ($files as $file) {
+    //         // Leer el contenido del archivo
+    //         $fileContents = file_get_contents($file);
+
+    //         // Reemplazar todas las referencias a la clase antigua con la nueva
+    //         $fileContents = preg_replace('/' . $prefix . $from . '\b/', $prefix . $to, $fileContents);
+
+    //         // Guardar los cambios
+    //         file_put_contents($file, $fileContents);
+
+    //         echo color("Se actualizó una referencia a '" . bold($prefix . $from, false) . "' en '" . bold($file, false) . "'.\n", "green");
+    //     }
+    // }
 }

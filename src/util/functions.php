@@ -35,7 +35,7 @@ function back($tx, $clr)
     return "\033[" . $colors[$clr] . "m$tx\033[0m";
 }
 
-function bold($tx)
+function bold($tx, $cl = true)
 {
-    return "\033[1m$tx\033[0m";
+    return "\033[1m$tx" . ($cl == true ? "\033[0m" : "");
 }
