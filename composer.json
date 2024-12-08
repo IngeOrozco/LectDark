@@ -7,21 +7,7 @@
             "Lectdark\\": "src/"
         }
     },
-    "bin": [
-        "lectdark.php"
-    ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/IngeOrozco/LectDark"
-        }
-    ],
     "require": {
         "php": ">=7.4"
-    },
-    "scripts": {
-        "lectdark": "php vendor/lect-studios/lectdark/lectdark.php"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }
