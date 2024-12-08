@@ -2,14 +2,11 @@
 <?php
 
 require __DIR__ . '/vendor/autoload.php';
+require_once 'src/util/functions.php';
 
-use Lectdark\Command;
+use Lectdark\command\Cmd;
 
-// Verificar argumentos
-if ($argc !== 3 || $argv[1] !== 'make:base') {
-    echo "Uso: php lectdark.php make:base [nombre]\n";
-    exit(1);
-}
+$command = $argv[1] ?? ''; // El primer argumento es el comando (por ejemplo, 'make:base')
+$args = array_slice($argv, 2); // Los demás argumentos (por ejemplo, 'usuario')
 
-$baseName = ucfirst($argv[2]);
-Command::makeBase($baseName);
+new Cmd($command, $args);
